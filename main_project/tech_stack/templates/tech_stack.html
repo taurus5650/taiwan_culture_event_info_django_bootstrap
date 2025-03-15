@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid py-2">
+
+    <div class="col-xl-12 col-sm-12 mb-xl-0 mb-12">
+        <!-- Section Form Action Url -->
+        <div class="p-5 pb-2">
+            <!-- Request Form Action Url -->
+            <form method="POST" action="{% url 'tech_stack' %}"> <!-- Calling index API -->
+
+                <!-- Body Row 1 -->
+                <div class="row mb-4">
+
+                    <!-- Card 1 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">Backend Framework</p>
+                                        <h5 class="mb-0">Django</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">code</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://github.com/django/django" class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 1 -->
+
+                    <!-- Card 2 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">Frontend</p>
+                                        <h5 class="mb-0">Bootstrap5</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">code</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://getbootstrap.com/" class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+
+
+                    <!-- Card 3 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">Unit Test</p>
+                                        <h5 class="mb-0">Pytest</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">code</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://github.com/pytest-dev/pytest" class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+
+                </div>
+                <!-- Body Row 1 -->
+
+
+                <!-- Body Row 2 -->
+                <div class="row mb-4">
+                    <!-- Card 4 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">Containerization</p>
+                                        <h5 class="mb-0">Docker</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">code</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://www.docker.com/" class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+
+
+                    <!-- Card 5 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">CI / CD</p>
+                                        <h5 class="mb-0">Github Actions</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">code</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://github.com/features/actions" class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 5 -->
+
+                    <!-- Card 6 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">Deployment Server</p>
+                                        <h5 class="mb-0">FLY io</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">code</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://fly.io/" class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 6 -->
+
+                </div>
+                <!-- Body Row 2 -->
+
+                <!-- Body Row 3 -->
+                <div class="row mb-4">
+
+                    <!-- Card 7 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">HTML Template</p>
+                                        <h5 class="mb-0">Creative Tim</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">receipt_long</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://www.creative-tim.com/" class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 7 -->
+
+                    <!-- Card 8 -->
+                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card">
+                            <div class="card-header p-2 ps-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-sm mb-0 text-capitalize">TW Culture Info</p>
+                                        <h5 class="mb-0">MoC opendata</h5>
+                                    </div>
+                                    <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                        <i class="material-symbols-rounded opacity-10">receipt_long</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-2 ps-3">
+                                <a href="https://opendata.culture.tw/frontsite/openData/detail?datasetId=274"
+                                   class="nav-link text-muted mb-0 text-sm"
+                                   target="_blank">link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 8 -->
+
+                </div>
+                <!-- Body Row 3 -->
+
+            </form>
+            <!-- Request Form Action Url -->
+
+        </div>
+        <!-- Section Form Action Url -->
+
+    </div>
+</div>
+{% endblock %}
