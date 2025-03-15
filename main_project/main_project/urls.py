@@ -22,3 +22,5 @@ urlpatterns = [
     path('', include('health_check.urls')),
     path('', include('concert.urls'))
 ]
+
+handler404 ='main_project.views.page_not_found'
