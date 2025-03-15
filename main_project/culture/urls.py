@@ -7,3 +7,4 @@ urlpatterns = [
     path('culture/', views.index, name='culture'),
     path('', RedirectView.as_view(url='/culture/', permanent=False)), # Rzoot path direct to /culture
 ]
+

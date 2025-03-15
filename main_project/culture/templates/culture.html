@@ -10,7 +10,8 @@
         <!-- Section Form Action Url -->
         <div class="p-5 pb-2">
             <!-- Request Form Action Url -->
-            <form method="POST" action="{% url 'culture' %}"> <!-- Calling index API -->
+            <form method="GET" action="{% url 'culture' %}"> <!-- Calling index API -->
+                {% csrf_token %}
 
                 <!--Title -->
                 <div class="">
@@ -39,13 +40,13 @@
                     <div class="col-xl-1 col-sm-1"></div>
 
                     <!-- Event dropdown -->
-                    <div class="col-xl-4 col-sm-4" id="event_category_field">
-                        <h6 class="font-weight-border">Event Category</h6>
+                    <div class="col-xl-4 col-sm-4" id="category_field">
+                        <h6 class="font-weight-border">Category</h6>
                         <div class="input-group input-group-outline mb-4">
                             <label class="form-label"></label>
-                            <select id="event_category_input" class="form-control">
-                                {% for event_category in event_category_json %}
-                                <option value="{{ event_category }}">{{ event_category }}</option>
+                            <select id="category_input" name="category_req" class="form-control">
+                                {% for category, category_id in event_category_json.items %}
+                                <option value="{{ category_id }}">{{ category }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -63,9 +64,14 @@
                     <div class="col-xl-4 col-sm-4" id="date_field">
                         <h6 class="font-weight-border">Date</h6>
                         <div class="input-group input-group-outline mb-4">
-                            <label for="year_month_picker" class="form-label">YYYY/MM</label>
-                            <input type="text" id="year_month_picker" class="form-control">
+                            <input type="text" id="year_month_picker" class="form-control" style="padding-left: 10px;">
                         </div>
+                        <script>
+                            var date = new Date();
+                            var year = date.getFullYear();
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            document.getElementById("year_month_picker").value = year + "/" + month;
+                        </script>
                     </div>
                     <!-- Date input -->
 
