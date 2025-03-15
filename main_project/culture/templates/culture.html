@@ -10,7 +10,7 @@
         <!-- Section Form Action Url -->
         <div class="p-5 pb-2">
             <!-- Request Form Action Url -->
-            <form method="GET" action="{% url 'culture' %}"> <!-- Calling index API -->
+            <form method="POST" action="{% url 'culture' %}"> <!-- Calling index API -->
                 {% csrf_token %}
 
                 <!--Title -->
@@ -28,9 +28,9 @@
                         <h6 class="font-weight-border">Location</h6>
                         <div class="input-group input-group-outline mb-4">
                             <label class="form-label"></label>
-                            <select id="location_input" class="form-control">
-                                {% for location in location_json %}
-                                <option value="{{ location }}">{{ location }}</option>
+                            <select id="location_input" name="location_req" class="form-control">
+                                {% for location, location_value in location_json.items %}
+                                <option value="{{ location_value }}">{{ location }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -64,7 +64,8 @@
                     <div class="col-xl-4 col-sm-4" id="date_field">
                         <h6 class="font-weight-border">Date</h6>
                         <div class="input-group input-group-outline mb-4">
-                            <input type="text" id="year_month_picker" class="form-control" style="padding-left: 10px;">
+                            <input type="text" id="year_month_picker" name="date_req" class="form-control"
+                                   style="padding-left: 10px;">
                         </div>
                         <script>
                             var date = new Date();
@@ -105,12 +106,60 @@
         <!-- Section Form Action Url -->
 
     </div>
-
-    <!-- --- API Response --- -->
-    <!-- --- API Response --- -->
-
-
 </div>
+
+<!-- --- API Response --- -->
+{% if final_resp_data %}
+<div class="row">
+    <div class="col-11">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Result</h6>
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center justify-content-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                Location
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                OnSales
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                Price
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in final_resp_data %}
+                        <tr>
+                            <td>{{ item.Time }}</td>
+                            <td>{{ item.Title }}</td>
+                            <td>
+                                <a href="{{ item.GoogleMap }}" target="_blank">{{ item.Location }}</a>
+                                ({{ item.LocationName }})
+                            </td>
+                            <td>{{ item.OnSales }}</td>
+                            <td>{{ item.Price }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<p> No result.</p>
+{% endif %}
+<!-- --- API Response --- -->
 
 
 {% endblock %}
