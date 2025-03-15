@@ -20,7 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('health_check.urls')),
-    path('', include('culture.urls'))
+    path('', include('culture.urls')),
+    path('', include('tech_stack.urls'))
 ]
 
-handler404 ='main_project.views.page_not_found'
+handler404 = 'main_project.views.page_not_found'

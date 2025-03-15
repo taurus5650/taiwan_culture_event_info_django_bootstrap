@@ -9,98 +9,102 @@
     <div class="col-xl-12 col-sm-12 mb-xl-0 mb-12">
         <!-- Section Form Action Url -->
         <div class="p-5 pb-2">
-            <!--Title -->
-            <div class="">
-                <H4> Taiwan Culture Information </H4>
-            </div>
+            <!-- Request Form Action Url -->
+            <form method="POST" action="{% url 'culture' %}"> <!-- Calling index API -->
 
-            <!--Title -->
+                <!--Title -->
+                <div class="">
+                    <H4> Taiwan Culture Information </H4>
+                </div>
 
-            <!--Section 1 -->
-            <div class="row pt-2">
+                <!--Title -->
 
-                <!-- Location dropdown -->
-                <div class="col-xl-4 col-sm-4" id="location_field">
-                    <h6 class="font-weight-border">Location</h6>
-                    <div class="input-group input-group-outline mb-4">
-                        <label class="form-label"></label>
-                        <select id="location_input" class="form-control">
-                            {% for location in location_json %}
-                            <option value="{{ location }}">{{ location }}</option>
-                            {% endfor %}
-                        </select>
+                <!--Section 1 -->
+                <div class="row pt-2">
+
+                    <!-- Location dropdown -->
+                    <div class="col-xl-4 col-sm-4" id="location_field">
+                        <h6 class="font-weight-border">Location</h6>
+                        <div class="input-group input-group-outline mb-4">
+                            <label class="form-label"></label>
+                            <select id="location_input" class="form-control">
+                                {% for location in location_json %}
+                                <option value="{{ location }}">{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Location dropdown -->
+
+                    <div class="col-xl-1 col-sm-1"></div>
+
+                    <!-- Event dropdown -->
+                    <div class="col-xl-4 col-sm-4" id="event_category_field">
+                        <h6 class="font-weight-border">Event Category</h6>
+                        <div class="input-group input-group-outline mb-4">
+                            <label class="form-label"></label>
+                            <select id="event_category_input" class="form-control">
+                                {% for event_category in event_category_json %}
+                                <option value="{{ event_category }}">{{ event_category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Event dropdown -->
+
+                </div>
+                <!--Section 1 -->
+
+
+                <!--Section 2 -->
+                <div class="row pt-2">
+
+                    <!-- Date input -->
+                    <div class="col-xl-4 col-sm-4" id="date_field">
+                        <h6 class="font-weight-border">Date</h6>
+                        <div class="input-group input-group-outline mb-4">
+                            <label for="year_month_picker" class="form-label">YYYY/MM</label>
+                            <input type="text" id="year_month_picker" class="form-control">
+                        </div>
+                    </div>
+                    <!-- Date input -->
+
+                    <div class="col-xl-1 col-sm-1"></div>
+
+                    <!-- NA input -->
+                    <div class="col-xl-4 col-sm-4" id="na_field">
+                        <h6 class="font-weight-border">NA</h6>
+                        <div class="input-group input-group-outline mb-4">
+                            <input type="text" id="na_input" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <!-- NA input -->
+
+                </div>
+                <!--Section 2 -->
+
+                <!-- Section Submit -->
+                <div class="row pt-2">
+                    <div class="col-10">
+                        <button class="text-center btn btn-light btn-lg text-bolder" type="submit" id="submit_btn">
+                            Submit
+                        </button>
                     </div>
                 </div>
-                <!-- Location dropdown -->
+                <!-- Section Submit -->
 
-                <div class="col-xl-1 col-sm-1"></div>
-
-                <!-- Event dropdown -->
-                <div class="col-xl-4 col-sm-4" id="event_category_field">
-                    <h6 class="font-weight-border">Event Category</h6>
-                    <div class="input-group input-group-outline mb-4">
-                        <label class="form-label"></label>
-                        <select id="event_category_input" class="form-control">
-                            {% for event_category in event_category_json %}
-                            <option value="{{ event_category }}">{{ event_category }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <!-- Event dropdown -->
-
-            </div>
-            <!--Section 1 -->
-
-
-            <!--Section 2 -->
-            <div class="row pt-2">
-
-                <!-- Date input -->
-                <div class="col-xl-4 col-sm-4" id="date_field">
-                    <h6 class="font-weight-border">Date</h6>
-                    <div class="input-group input-group-outline mb-4">
-                        <label for="year_month_picker" class="form-label">YYYY/MM</label>
-                        <input type="text" id="year_month_picker" class="form-control">
-                    </div>
-                </div>
-                <!-- Date input -->
-
-                <div class="col-xl-1 col-sm-1"></div>
-
-                <!-- NA input -->
-                <div class="col-xl-4 col-sm-4" id="na_field">
-                    <h6 class="font-weight-border">NA</h6>
-                    <div class="input-group input-group-outline mb-4">
-                        <input type="text" id="na_input" class="form-control" disabled>
-                    </div>
-                </div>
-                <!-- NA input -->
-
-            </div>
-            <!--Section 2 -->
-
-            <!-- Section Submit -->
-            <div class="row pt-2">
-                <div class="col-10">
-                    <button class="text-center btn btn-light btn-lg text-bolder" type="submit" id="submit_btn">
-                        Submit
-                    </button>
-                </div>
-            </div>
-            <!-- Section Submit -->
-
+            </form>
+            <!-- Request Form Action Url -->
         </div>
         <!-- Section Form Action Url -->
 
     </div>
 
     <!-- --- API Response --- -->
-<!-- --- API Response --- -->
+    <!-- --- API Response --- -->
 
 
 </div>
-
 
 
 {% endblock %}

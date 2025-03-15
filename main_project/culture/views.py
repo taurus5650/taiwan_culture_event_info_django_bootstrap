@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .data import Location, EventCategory
 
 
+def process():
+    pass
+
 def index(request):
     return render(
         request=request,
