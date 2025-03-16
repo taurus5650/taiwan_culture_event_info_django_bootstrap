@@ -7,7 +7,7 @@ from http import HTTPStatus
 import json
 from datetime import datetime
 import re
-from utility import resp_spec, CommonRespResultCode, CommonRespMsg
+from utility import resp_spec, RespCommonResultCode, RespCommonMsg
 
 from .data import Location, EventCategory
 
@@ -35,7 +35,6 @@ def _api_process(
 
                 for show in show_info:
                     if location_req in show['location'] and date_req in show['time']:
-
                         event = {
                             "Time": show.get('time'),
                             "Title": title,
@@ -58,33 +57,32 @@ def _api_process(
 
             # json_data = json.dumps(final_result, ensure_ascii=False, indent=4)
             return resp_spec(
-                result=CommonRespResultCode.SUCCESS,
-                message=CommonRespMsg.SUCESS,
+                result=RespCommonResultCode.SUCCESS,
+                message=RespCommonMsg.SUCESS,
                 result_obj=final_result
             )
 
         except json.JSONDecodeError as e:
             return resp_spec(
-                result=CommonRespResultCode.FAILED,
-                message=CommonRespMsg.FAILED,
+                result=RespCommonResultCode.FAILED,
+                message=RespCommonMsg.FAILED,
                 result_obj=f"{e}"
             )
         except Exception as e:
             resp_spec(
-                result=CommonRespResultCode.FAILED,
-                message=CommonRespMsg.FAILED,
+                result=RespCommonResultCode.FAILED,
+                message=RespCommonMsg.FAILED,
                 result_obj=f"{e}"
             )
 
     return resp_spec(
-        result=CommonRespResultCode.SUCCESS,
-        message=CommonRespMsg.SUCESS,
+        result=RespCommonResultCode.SUCCESS,
+        message=RespCommonMsg.SUCESS,
         result_obj=response.text
     )
 
 
 def index(request):
-
     final_resp_data = None
     if request.method == "POST":
         event_category_req = request.POST.get('category_req')
@@ -98,7 +96,6 @@ def index(request):
                 location_req=location_req,
                 date_req=date_req
             )
-
 
     return render(
         request=request,
