@@ -1,3 +1,5 @@
+import pytest
+from http import HTTPStatus
 from unittest.mock import patch, MagicMock
 
 from django.http import HttpRequest
@@ -5,7 +7,6 @@ from django.test import TestCase, RequestFactory
 
 from utility import RespCommonResultCode
 from .views import _culture_info_process, index
-from http import HTTPStatus
 
 
 class TestCulcureViews(TestCase):
