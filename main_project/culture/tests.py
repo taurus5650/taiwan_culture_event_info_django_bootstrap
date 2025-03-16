@@ -6,7 +6,7 @@ from django.http import HttpRequest
 from django.test import TestCase, RequestFactory
 
 from utility import RespCommonResultCode
-from .views import _culture_info_process, index
+from culture.views import _culture_info_process, index
 
 
 class TestCulcureViews(TestCase):
