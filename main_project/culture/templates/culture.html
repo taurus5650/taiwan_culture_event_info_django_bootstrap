@@ -143,7 +143,9 @@
                             {% for item in final_resp_data %}
                             <tr>
                                 <td>{{ item.Time }}</td>
-                                <td>{{ item.Title }}</td>
+                                <td>
+                                    <a href="{{ item.GoogleSearch }}" target="_blank">{{ item.Title }}</a>
+                                </td>
                                 <td>
                                     <a href="{{ item.GoogleMap }}" target="_blank">{{ item.Location }}</a>
                                     ({{ item.LocationName }})

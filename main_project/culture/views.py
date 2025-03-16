@@ -16,6 +16,10 @@ def _google_map_url(address: str):
     return f"https://www.google.com/maps/search/?api=1&query={address}"
 
 
+def _google_search(keyword: str):
+    return f"https://www.google.com/search?q={keyword}"
+
+
 def _api_process(
         request: HttpRequest, event_category_req: int, location_req: str, date_req: str):
     response = requests.get(
@@ -25,6 +29,13 @@ def _api_process(
 
     if response.status_code == HTTPStatus.OK:
         try:
+            if not response.text.strip():
+                return resp_spec(
+                    result=RespCommonResultCode.UNKNOWN_ERROR,
+                    message=RespCommonMsg.UNKNOWN_ERROR,
+                    result_obj="Empty response"
+                )
+
             resp = response.json()
 
             final_result = []
@@ -38,6 +49,7 @@ def _api_process(
                         event = {
                             "Time": show.get('time'),
                             "Title": title,
+                            "GoogleSearch": str(keyword=title),
                             "Location": show.get('location'),
                             "GoogleMap": str(_google_map_url(address=show.get('location'))),
                             "LocationName": show.get('locationName'),
@@ -55,7 +67,6 @@ def _api_process(
                 reverse=False,
             )
 
-            # json_data = json.dumps(final_result, ensure_ascii=False, indent=4)
             return resp_spec(
                 result=RespCommonResultCode.SUCCESS,
                 message=RespCommonMsg.SUCESS,
@@ -66,13 +77,13 @@ def _api_process(
             return resp_spec(
                 result=RespCommonResultCode.FAILED,
                 message=RespCommonMsg.FAILED,
-                result_obj=f"{e}"
+                result_obj=f"JSONDecodeError: {e}"
             )
         except Exception as e:
             resp_spec(
                 result=RespCommonResultCode.FAILED,
                 message=RespCommonMsg.FAILED,
-                result_obj=f"{e}"
+                result_obj=f"Exception: {e}"
             )
 
     return resp_spec(
