@@ -20,7 +20,7 @@ def _google_search(keyword: str):
     return f"https://www.google.com/search?q={keyword}"
 
 
-def _api_process(
+def _culture_info_process(
         request: HttpRequest, event_category_req: int, location_req: str, date_req: str):
     response = requests.get(
         url="https://cloud.culture.tw/frontsite/trans/SearchShowAction.do",
@@ -41,15 +41,15 @@ def _api_process(
             final_result = []
 
             for result in resp:
-                show_info = result['showInfo']
-                title = result['title']
+                show_info = result.get('showInfo', [])
+                title = result.get('title', 'Untitled')
 
                 for show in show_info:
                     if location_req in show['location'] and date_req in show['time']:
                         event = {
                             "Time": show.get('time'),
                             "Title": title,
-                            "GoogleSearch": str(keyword=title),
+                            "GoogleSearch": str(_google_search(keyword=title)),
                             "Location": show.get('location'),
                             "GoogleMap": str(_google_map_url(address=show.get('location'))),
                             "LocationName": show.get('locationName'),
@@ -101,7 +101,7 @@ def index(request):
         date_req = request.POST.get('date_req')
 
         if event_category_req and location_req and date_req:
-            final_resp_data = _api_process(
+            final_resp_data = _culture_info_process(
                 request=request,
                 event_category_req=event_category_req,
                 location_req=location_req,
