@@ -1,3 +1,5 @@
+from doctest import UnexpectedException
+
 import requests
 from django.http import HttpRequest
 from django.shortcuts import render
@@ -5,14 +7,20 @@ from http import HTTPStatus
 import json
 from datetime import datetime
 import re
+from utility import resp_spec, RespCommonResultCode, RespCommonMsg
 
 from .data import Location, EventCategory
 
+
 def _google_map_url(address: str):
-    return  f"https://www.google.com/maps/search/?api=1&query={address}"
+    return f"https://www.google.com/maps/search/?api=1&query={address}"
 
 
-def _api_process(
+def _google_search(keyword: str):
+    return f"https://www.google.com/search?q={keyword}"
+
+
+def _culture_info_process(
         request: HttpRequest, event_category_req: int, location_req: str, date_req: str):
     response = requests.get(
         url="https://cloud.culture.tw/frontsite/trans/SearchShowAction.do",
@@ -20,48 +28,72 @@ def _api_process(
     )
 
     if response.status_code == HTTPStatus.OK:
-        resp = response.json()
+        try:
+            if not response.text.strip():
+                return resp_spec(
+                    result=RespCommonResultCode.UNKNOWN_ERROR,
+                    message=RespCommonMsg.UNKNOWN_ERROR,
+                    result_obj="Empty response"
+                )
 
-        final_result = []
+            resp = response.json()
 
-        for result in resp:
-            show_info = result['showInfo']
-            title = result['title']
+            final_result = []
 
-            for show in show_info:
-                if location_req in show['location'] and date_req in show['time']:
+            for result in resp:
+                show_info = result.get('showInfo', [])
+                title = result.get('title', 'Untitled')
 
-                    event = {
-                        "Time": show.get('time'),
-                        "Title": title,
-                        "Location": show.get('location'),
-                        "GoogleMap": str(_google_map_url(address=show.get('location'))),
-                        "LocationName": show.get('locationName'),
-                        "OnSales": show.get('onSales'),
-                        "Price": show.get('price'),
-                        "Latitude": show.get('latitude'),
-                        "Longitude": show.get('longitude'),
-                        "EndTime": show.get('endTime')
-                    }
-                    final_result.append(event)
+                for show in show_info:
+                    if location_req in show['location'] and date_req in show['time']:
+                        event = {
+                            "Time": show.get('time'),
+                            "Title": title,
+                            "GoogleSearch": str(_google_search(keyword=title)),
+                            "Location": show.get('location'),
+                            "GoogleMap": str(_google_map_url(address=show.get('location'))),
+                            "LocationName": show.get('locationName'),
+                            "OnSales": show.get('onSales'),
+                            "Price": show.get('price'),
+                            "Latitude": show.get('latitude'),
+                            "Longitude": show.get('longitude'),
+                            "EndTime": show.get('endTime')
+                        }
+                        final_result.append(event)
+            final_result = sorted(
+                final_result,
+                key=lambda x: datetime.strptime(
+                    x['Time'], '%Y/%m/%d %H:%M:%S'),
+                reverse=False,
+            )
 
-        final_result = sorted(
-            final_result,
-            key=lambda x: datetime.strptime(x['Time'], '%Y/%m/%d %H:%M:%S'),
-            reverse=False,
-        )
+            return resp_spec(
+                result=RespCommonResultCode.SUCCESS,
+                message=RespCommonMsg.SUCESS,
+                result_obj=final_result
+            )
 
+        except json.JSONDecodeError as e:
+            return resp_spec(
+                result=RespCommonResultCode.FAILED,
+                message=RespCommonMsg.FAILED,
+                result_obj=f"JSONDecodeError: {e}"
+            )
+        except Exception as e:
+            resp_spec(
+                result=RespCommonResultCode.FAILED,
+                message=RespCommonMsg.FAILED,
+                result_obj=f"Exception: {e}"
+            )
 
-        json_data = json.dumps(final_result, ensure_ascii=False, indent=4)
-        print(json_data)
-        return json_data
-    return []
-
-
+    return resp_spec(
+        result=RespCommonResultCode.SUCCESS,
+        message=RespCommonMsg.SUCESS,
+        result_obj=response.text
+    )
 
 
 def index(request):
-
     final_resp_data = None
     if request.method == "POST":
         event_category_req = request.POST.get('category_req')
@@ -69,7 +101,7 @@ def index(request):
         date_req = request.POST.get('date_req')
 
         if event_category_req and location_req and date_req:
-            final_resp_data = _api_process(
+            final_resp_data = _culture_info_process(
                 request=request,
                 event_category_req=event_category_req,
                 location_req=location_req,
@@ -82,6 +114,6 @@ def index(request):
         context={
             'location_json': Location.location_json,
             'event_category_json': EventCategory.event_catetory_json,
-            'final_resp_data': json.loads(final_resp_data) if final_resp_data else []
+            'final_resp_data': final_resp_data['ResultObject'] if final_resp_data else []
         }
     )
