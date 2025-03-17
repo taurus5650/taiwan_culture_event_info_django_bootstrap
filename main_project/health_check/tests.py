@@ -1,11 +1,7 @@
-import pytest
-from http import HTTPStatus
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
-from django.http import HttpRequest
 from django.test import TestCase, RequestFactory
 
-from utility import RespCommonResultCode
 from health_check.views import index
 
 

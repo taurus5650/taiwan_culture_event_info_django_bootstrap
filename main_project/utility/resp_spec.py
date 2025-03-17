@@ -1,5 +1,5 @@
 from typing import Any
-from utility.logger import logger, log_class, log_func
+from utility.logger import logger, log_func
 
 class RespCommonResultCode:
     SUCCESS = "0000"

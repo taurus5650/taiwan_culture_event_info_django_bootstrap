@@ -19,4 +19,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print(f"URL: http://127.0.0.1:8787/culture/")
     main()

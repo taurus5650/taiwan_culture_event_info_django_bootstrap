@@ -58,6 +58,7 @@ cover/
 
 # Django stuff:
 *.log
+*.log.*
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -129,7 +130,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+deployment_tcei/.env
 .venv
 env/
 venv/

@@ -1,0 +1,42 @@
+services:
+  web:
+    image: taiwan_culture_event_info_django_bootstrap_web_img
+    container_name: taiwan_culture_event_info_django_bootstrap_web
+    stdin_open: true
+    tty: true
+    build:
+      context: ..
+      dockerfile: deployment_tcei/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      - DEBUG=True
+    volumes:
+      - ../:/web
+      - sqlite_data:/web/db
+    ports:
+      - '8787:8787'
+    command: python /web/main_project/manage.py runserver 0.0.0.0:8787
+    networks:
+      - custom_network
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - 'start'
+      - '--all'
+      - '--config'
+      - '/etc/ngrok.yml'
+    ports:
+      - '8788:8788'
+    depends_on:
+      - web
+
+networks:
+  custom_network:
+    driver: bridge
+
+volumes:
+  sqlite_data: {}
