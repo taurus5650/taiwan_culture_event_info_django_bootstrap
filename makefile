@@ -17,17 +17,11 @@ help:
 
 .PHONY: run-dev
 run-dev:
-	DJANGO_SETTINGS_MODULE=config.settings.dev DEBUG=True python3 ./main_project/manage.py runserver
-
-.PHONY: check-dev-env
-check-dev-env:
-	@if [ ! -f .env ]; then \
-	    echo "Check LOCAL .env"; \
-	    touch $(DEPLOYMENT_PATH).env; \
-	fi
+	poetry config virtualenvs.in-project true --local
+	DEBUG=True python3 ./main_project/manage.py runserver
 
 .PHONY: run-dev-docker
-run-dev-docker: check-dev-env
+run-dev-docker:
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) down
 	docker image prune -f
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) up --build -d $(DOCKER_SERVICE_NAME)

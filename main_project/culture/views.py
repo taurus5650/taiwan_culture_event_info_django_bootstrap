@@ -1,13 +1,9 @@
-from doctest import UnexpectedException
-
 import requests
 from django.http import HttpRequest
 from django.shortcuts import render
 from http import HTTPStatus
-import json
 from datetime import datetime
-import re
-from utility import resp_spec, RespCommonResultCode, RespCommonMsg, logger, log_class, log_func, set_request_id, get_request_id
+from utility import resp_spec, RespCommonResultCode, RespCommonMsg, logger, log_func
 
 from .data import Location, EventCategory
 
