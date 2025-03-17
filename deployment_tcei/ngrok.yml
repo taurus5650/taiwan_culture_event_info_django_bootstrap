@@ -1,0 +1,9 @@
+ngrok.ymlversion: "2"
+authtoken: {TOKEN}
+update: false
+log: stdout
+
+tunnels:
+  basic:
+    proto: http
+    addr: web:8787
