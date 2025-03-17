@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 from django.http import HttpRequest
 from django.test import TestCase, RequestFactory
 
-from main_project.utility import RespCommonResultCode
+from utility import RespCommonResultCode
 from culture.views import _culture_info_process, index
 
 

@@ -22,18 +22,31 @@ run-dev:
 
 .PHONY: run-dev-docker
 run-dev-docker:
+	@echo "========== Starting Docker Compose Process =========="
+	@echo "========== 1. Stopping and removing containers, and cleaning up unused images =========="
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) down
 	docker image prune -f
+	@echo "========== 2. Building and starting the Docker service ($(DOCKER_SERVICE_NAME)) =========="
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) up --build -d $(DOCKER_SERVICE_NAME)
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) logs -f $(DOCKER_SERVICE_NAME)
+	@echo "========== 3. Checking the status of the Docker service ($(DOCKER_SERVICE_NAME)) =========="
+	docker-compose -f $(DOCKER_COMPOSE_FILE) ps
+	docker image prune -f
+	@echo "========== Docker Compose Process Complete =========="
 
 .PHONY: run-dev-docker-ngrok
-run-dev-docker-ngrok: check-dev-env
+run-dev-docker-ngrok:
+	@echo "========== Starting Docker Compose Process =========="
+	@echo "========== 1. Stopping and removing containers, and cleaning up unused images =========="
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) down
 	docker image prune -f
+	@echo "========== 2. Building and starting the Docker service ($(DOCKER_SERVICE_NAME)) =========="
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) up --build -d
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) logs -f $(DOCKER_SERVICE_NAME) &
 	docker-compose -f $(DOCKER_COMPOSE_FILE_DEV) logs -f ngrok
+	@echo "========== 3. Checking the status of the Docker service ($(DOCKER_SERVICE_NAME)) =========="
+	docker-compose -f $(DOCKER_COMPOSE_FILE) ps
+	@echo "========== Docker Compose Process Complete =========="
 
 .PHONY: run-prod
 run-prod:
