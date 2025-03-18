@@ -27,7 +27,12 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           export FLYCTL_ACCESS_TOKEN=$FLY_API_TOKEN
+          if ! $HOME/.fly/bin/flyctl apps list | grep -q "taiwan-culture-event-info"; then
+            $HOME/.fly/bin/flyctl launch --no-deploy --name taiwan-culture-event-info --region hkg
+          fi
           $HOME/.fly/bin/flyctl deploy --remote-only
+      
+      
 
       - name: Run Django Tests
         run: |
