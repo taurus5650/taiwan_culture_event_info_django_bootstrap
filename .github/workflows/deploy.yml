@@ -35,7 +35,9 @@ jobs:
       - name: Install Flyctl
         run: |
           curl -sSL https://fly.io/install.sh | sh
-          sudo mv ~/.flyctl /usr/local/bin/
+          export FLYCTL_INSTALL="/home/runner/.fly"
+          export PATH="$FLYCTL_INSTALL/bin:$PATH"
+          echo "Flyctl installed successfully. PATH updated."
 
       - name: Authenticate Docker with Fly.io
         run: flyctl auth docker
