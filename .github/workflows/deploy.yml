@@ -1,14 +1,9 @@
-name: Deploy to Fly.io
+name: Deploy Django to Fly.io
 
 on:
   push:
     branches:
       - github_ci_250318
-
-permissions:
-  contents: read
-  packages: write
-  id-token: write
 
 jobs:
   deploy:
@@ -18,41 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Docker & Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            ca-certificates \
-            curl \
-            gnupg \
-            lsb-release
-          sudo mkdir -m 0755 -p /etc/apt/keyrings
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc
-          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose
+      - name: Install Fly CLI
+        run: curl -L https://fly.io/install.sh | sh
 
-      - name: Install Flyctl
-        run: |
-          curl -sSL https://fly.io/install.sh | sh
-          export FLYCTL_INSTALL="/home/runner/.fly"
-          export PATH="$FLYCTL_INSTALL/bin:$PATH"
-          echo "Flyctl installed successfully. PATH updated."
-
-      - name: Authenticate Docker with Fly.io
-        run: |
-          flyctl --version
-          flyctl auth docker
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
-      - name: Build & Push Docker Image
-        run: |
-          docker-compose -f ./deployment_tcei/docker-compose-prod.yml build
-          docker-compose -f ./deployment_tcei/docker-compose-prod.yml push
+      - name: Set up Fly CLI
+        run: echo '${HOME}/.fly/bin' >> $GITHUB_PATH
 
       - name: Deploy to Fly.io
-        run: |
-          flyctl deploy --remote-only
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+            FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+            flyctl deploy --remote-only
+
+      - name: Run Django Tests
+        run: |
+          pip install -r requirements.txt
+          cd main_project
+          python manage.py test
