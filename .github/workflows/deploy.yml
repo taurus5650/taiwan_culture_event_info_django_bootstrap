@@ -26,10 +26,9 @@ jobs:
 
       - name: Running Test - Test in Docker Container
         run: |
-          docker exec taiwan_culture_event_info_django_bootstrap_web cd /web/main_project
-          docker exec taiwan_culture_event_info_django_bootstrap_web pytest health_check/tests.py -v
-          docker exec taiwan_culture_event_info_django_bootstrap_web pytest culture/tests.py -v
-          docker exec taiwan_culture_event_info_django_bootstrap_web pytest tech_stack/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest /web/main_project/health_check/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest /web/main_project/culture/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest /web/main_project/tech_stack/tests.py -v
 
       - name: Flyio - Install Flyio
         run: curl -L https://fly.io/install.sh | sh

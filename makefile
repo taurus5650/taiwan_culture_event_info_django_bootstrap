@@ -17,7 +17,6 @@ help:
 
 .PHONY: run-dev
 run-dev:
-	poetry config virtualenvs.in-project true --local
 	DEBUG=True python3 ./main_project/manage.py runserver
 
 .PHONY: run-dev-docker
