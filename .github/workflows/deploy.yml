@@ -26,6 +26,7 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
+          export FLYCTL_ACCESS_TOKEN=$FLY_API_TOKEN
           $HOME/.fly/bin/flyctl deploy --remote-only
 
       - name: Run Django Tests
