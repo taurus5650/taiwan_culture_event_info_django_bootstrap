@@ -34,7 +34,7 @@ jobs:
         run: make run-prod
 
       - name: Running Test
-        run: python manage.py test
+        run: python main_project/manage.py test
 
       - name: Flyio - Deploy to Fly.io
         env:
