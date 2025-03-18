@@ -50,6 +50,10 @@ jobs:
       - name: Set up Fly.io CLI
         uses: superfly/flyctl-actions/setup-flyctl@master
 
+      - name: Login to Fly.io Docker Registry
+        run: |
+          echo "${{ secrets.FLY_API_TOKEN }}" | docker login -u oauth --password-stdin registry.fly.io
+
       - name: Build & Push Docker Image
         run: |
           docker-compose -f ./deployment_tcei/docker-compose-prod.yml build
