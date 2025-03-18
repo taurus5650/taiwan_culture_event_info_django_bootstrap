@@ -13,15 +13,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Flyio - Install Flyio
-        run: curl -L https://fly.io/install.sh | sh
-
-      - name: Flyio - Add Flyio github path
-        run: echo "$HOME/.fly/bin" >> $GITHUB_PATH
-
-      - name: Flyio - Verify Flyio installation
-        run: $HOME/.fly/bin/flyctl version
-
       - name: Running Test - Setup DockerEnv
         uses: docker/setup-buildx-action@v2
 
@@ -34,7 +25,19 @@ jobs:
         run: make run-prod
 
       - name: Running Test
-        run: python main_project/manage.py test
+        run: |
+          pytest health_check/tests.py -v
+          pytest culture/tests.py -v
+          pytest tech_stack/tests.py -v
+
+      - name: Flyio - Install Flyio
+        run: curl -L https://fly.io/install.sh | sh
+
+      - name: Flyio - Add Flyio github path
+        run: echo "$HOME/.fly/bin" >> $GITHUB_PATH
+
+      - name: Flyio - Verify Flyio installation
+        run: $HOME/.fly/bin/flyctl version
 
       - name: Flyio - Deploy to Fly.io
         env:
