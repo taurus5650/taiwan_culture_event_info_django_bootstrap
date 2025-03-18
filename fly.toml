@@ -5,7 +5,6 @@ processes = []
 
 [env]
   DEBUG = "False"
-  FLY_API_TOKEN = "fo1_WuVV4zKmdy35IeP-DqB10ggqXAgDzmTlqjah1IPC8Dg"
 
 [experimental]
   allowed_public_ports = []
