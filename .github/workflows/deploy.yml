@@ -5,6 +5,11 @@ on:
     branches:
       - github_ci_250318
 
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
