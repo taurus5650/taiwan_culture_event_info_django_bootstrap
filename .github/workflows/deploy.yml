@@ -26,6 +26,7 @@ jobs:
 
       - name: Running Test
         run: |
+          cd main_project
           pytest health_check/tests.py -v
           pytest culture/tests.py -v
           pytest tech_stack/tests.py -v
