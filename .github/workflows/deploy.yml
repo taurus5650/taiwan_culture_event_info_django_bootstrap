@@ -1,0 +1,30 @@
+name: Deploy Django to Fly.io
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build and Deploy with Docker Compose
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          docker-compose -f deployment_tcei/docker-compose-prod.yml build
+          
+          curl -L https://fly.io/install.sh | sh
+          export PATH="$HOME/.fly/bin:$PATH"
+          
+          flyctl deploy --remote-only
+
+      - name: Run Django Tests
+        run: |
+          pip install -r requirements.txt
+          python manage.py test

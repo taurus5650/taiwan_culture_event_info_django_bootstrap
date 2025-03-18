@@ -12,6 +12,7 @@ services:
       - ./.env
     environment:
       - DEBUG=False
+      - FLY_API_TOKEN=${FLY_API_TOKEN}
     volumes:
       - ../:/web
       - sqlite_data:/web/db
