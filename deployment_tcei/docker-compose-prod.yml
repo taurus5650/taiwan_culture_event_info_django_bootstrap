@@ -10,7 +10,7 @@ services:
     restart: always
     environment:
       - DEBUG=False
-      - FLY_API_TOKEN=fo1_WuVV4zKmdy35IeP-DqB10ggqXAgDzmTlqjah1IPC8Dg
+      - FLY_API_TOKEN=${FLY_API_TOKEN}
     volumes:
       - ../:/web
       - sqlite_data:/web/db
