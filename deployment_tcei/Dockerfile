@@ -17,4 +17,4 @@ ENV TZ=Asia/Taipei
 
 EXPOSE 8787
 
-CMD ['gunicorn', '--bind', '0.0.0.0:8787', 'main_project.wsgi:application"']
+CMD python /web/main_project/manage.py runserver 0.0.0.0:8787

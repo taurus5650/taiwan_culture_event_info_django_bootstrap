@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-70)6&@uw0wg==zg@=2s+h@=ums@51#e2x_1sf20vi1)l8&v-a0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', os.getenv('ALLOWED_HOSTS', '.fly.dev')]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-secret-key')
 
 
