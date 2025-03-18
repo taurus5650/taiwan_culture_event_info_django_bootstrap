@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "taiwan-concert-info-django-bootstrap"
+version = "0.1.0"
+description = ""
+authors = ["taurus5650 <taurus_5650@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+requests = "^2.32.3"
+django = "^5.1.7"
+pytest = "^8.3.5"
+responses = "^0.25.7"
+pytest-django = "^4.10.0"
+pytest-cov = "^6.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
