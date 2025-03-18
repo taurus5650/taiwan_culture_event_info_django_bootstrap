@@ -21,7 +21,7 @@ jobs:
 
       - name: Docker Compose Build
         run: |
-          docker-compose -f deployment_tcei/docker-compose-prod.yml build
+          docker-compose -f ./deployment_tcei/docker-compose-prod.yml build
 
       - name: Deploy to Fly.io
         env:
