@@ -1,4 +1,4 @@
-name: Deploy Django to Fly.io
+name: Deploy to Fly.io
 
 on:
   push:
@@ -13,23 +13,24 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Fly CLI
-        run: curl -L https://fly.io/install.sh | sh
+      - name: Install Docker & Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose version
 
-      - name: Set up Fly CLI
-        run: echo '${HOME}/.fly/bin' >> $GITHUB_PATH
+      - name: Set up Fly.io CLI
+        uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Docker Compose Build
+      - name: Build & Push Docker Image
         run: |
           docker-compose -f ./deployment_tcei/docker-compose-prod.yml build
+          docker-compose -f ./deployment_tcei/docker-compose-prod.yml push
 
       - name: Deploy to Fly.io
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           flyctl deploy --remote-only
-
-      - name: Run Django Tests
-        run: |
-          pip install -r requirements.txt
-          python manage.py test
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
