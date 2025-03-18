@@ -17,7 +17,6 @@ help:
 
 .PHONY: run-dev
 run-dev:
-	poetry config virtualenvs.in-project true --local
 	DEBUG=True python3 ./main_project/manage.py runserver
 
 .PHONY: run-dev-docker
@@ -50,7 +49,7 @@ run-dev-docker-ngrok:
 
 .PHONY: run-prod
 run-prod:
-	@echo "========== Starting Docker Compose Process =========="
+	@echo "========== Starting Docker Compose Process (Production) =========="
 	@echo "========== 1. Stopping and removing containers, and cleaning up unused images =========="
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down
 	docker image prune -f
@@ -59,4 +58,5 @@ run-prod:
 	@echo "========== 3. Checking the status of the Docker service ($(DOCKER_SERVICE_NAME)) =========="
 	docker-compose -f $(DOCKER_COMPOSE_FILE) ps
 	docker image prune -f
-	@echo "========== Docker Compose Process Complete =========="
+	@echo "========== Docker Compose Production Process Complete =========="
+

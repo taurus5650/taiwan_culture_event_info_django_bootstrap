@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from django.conf import settings
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,11 +26,12 @@ SECRET_KEY = 'django-insecure-70)6&@uw0wg==zg@=2s+h@=ums@51#e2x_1sf20vi1)l8&v-a0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '.fly.dev', os.getenv('FLY_HOSTNAME', '')]
+CSRF_TRUSTED_ORIGINS = [
+    'https://taiwan-culture-event-info.fly.dev',
+]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

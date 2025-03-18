@@ -1,0 +1,47 @@
+name: Deploy Django to Fly.io
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Running Test - Setup DockerEnv
+        uses: docker/setup-buildx-action@v2
+
+      - name: Running Test - Install Docker Compose
+        run: |
+          curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
+      - name: Running Test - Setup DockerEnv
+        run: make run-prod
+
+      - name: Running Test - Test in Docker Container
+        run: |
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest /web/main_project/health_check/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest /web/main_project/culture/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest /web/main_project/tech_stack/tests.py -v
+
+      - name: Flyio - Install Flyio
+        run: curl -L https://fly.io/install.sh | sh
+
+      - name: Flyio - Add Flyio github path
+        run: echo "$HOME/.fly/bin" >> $GITHUB_PATH
+
+      - name: Flyio - Verify Flyio installation
+        run: $HOME/.fly/bin/flyctl version
+
+      - name: Flyio - Deploy to Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          export FLYCTL_ACCESS_TOKEN=$FLY_API_TOKEN
+          $HOME/.fly/bin/flyctl deploy --remote-only --yes
