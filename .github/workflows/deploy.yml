@@ -3,7 +3,7 @@ name: Deploy Django to Fly.io
 on:
   push:
     branches:
-      - github_ci_250318
+      - master
 
 jobs:
   deploy:
