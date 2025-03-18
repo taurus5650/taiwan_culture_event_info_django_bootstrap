@@ -22,15 +22,14 @@ jobs:
       - name: Verify Fly CLI installation
         run: $HOME/.fly/bin/flyctl version
 
+      - name: Run Django Tests
+        run: |
+            source venv/bin/activate
+            python manage.py test
+
       - name: Deploy to Fly.io
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           export FLYCTL_ACCESS_TOKEN=$FLY_API_TOKEN
           $HOME/.fly/bin/flyctl deploy --remote-only --yes
-
-      - name: Run Django Tests
-        run: |
-          pip install -r requirements.txt
-          cd main_project
-          python manage.py test
