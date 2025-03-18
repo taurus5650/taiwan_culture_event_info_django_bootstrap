@@ -13,19 +13,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Fly CLI
+      - name: Flyio - Install Flyio
         run: curl -L https://fly.io/install.sh | sh
 
-      - name: Add Fly to PATH
+      - name: Flyio - Add Flyio github path
         run: echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
-      - name: Verify Fly CLI installation
+      - name: Flyio - Verify Flyio installation
         run: $HOME/.fly/bin/flyctl version
 
-      - name: Run Django Tests
-        run: |
-            source venv/bin/activate
-            python manage.py test
+      - name: Running Test - Setup DockerEnv
+        uses: docker/setup-buildx-action@v2
+
+      - name: Running Test - Setup DockerEnv
+        run: make run-prod
+
+      - name: Running Test
+        run: python manage.py test
 
       - name: Deploy to Fly.io
         env:
