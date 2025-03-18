@@ -32,6 +32,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose
 
+      - name: Install Flyctl
+        run: |
+          curl -sSL https://fly.io/install.sh | sh
+          sudo mv ~/.flyctl /usr/local/bin/
 
       - name: Authenticate Docker with Fly.io
         run: flyctl auth docker
