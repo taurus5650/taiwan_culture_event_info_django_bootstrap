@@ -8,8 +8,6 @@ services:
       context: ..
       dockerfile: deployment_tcei/Dockerfile
     restart: always
-    env_file:
-      - ./.env
     environment:
       - DEBUG=False
       - FLY_API_TOKEN=${FLY_API_TOKEN}
