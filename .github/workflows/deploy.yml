@@ -24,11 +24,11 @@ jobs:
       - name: Running Test - Setup DockerEnv
         run: make run-prod
 
-      - name: Running Tests in Docker Container
+      - name: Running Test - Test in Docker Container
         run: |
-          docker exec <container_name> pytest health_check/tests.py -v
-          docker exec <container_name> pytest culture/tests.py -v
-          docker exec <container_name> pytest tech_stack/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest health_check/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest culture/tests.py -v
+          docker exec taiwan_culture_event_info_django_bootstrap_web pytest tech_stack/tests.py -v
 
       - name: Flyio - Install Flyio
         run: curl -L https://fly.io/install.sh | sh
