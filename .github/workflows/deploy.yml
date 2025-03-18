@@ -13,15 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build and Deploy with Docker Compose
+      - name: Install Fly CLI
+        run: curl -L https://fly.io/install.sh | sh
+
+      - name: Set up Fly CLI
+        run: echo '${HOME}/.fly/bin' >> $GITHUB_PATH
+
+      - name: Docker Compose Build
+        run: |
+          docker-compose -f deployment_tcei/docker-compose-prod.yml build
+
+      - name: Deploy to Fly.io
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          docker-compose -f deployment_tcei/docker-compose-prod.yml build
-          
-          curl -L https://fly.io/install.sh | sh
-          export PATH="$HOME/.fly/bin:$PATH"
-          
           flyctl deploy --remote-only
 
       - name: Run Django Tests

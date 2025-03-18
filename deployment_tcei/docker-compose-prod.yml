@@ -18,7 +18,7 @@ services:
       - sqlite_data:/web/db
     ports:
       - '8787:8787'
-    command: python /web/main_project/manage.py runserver 0.0.0.0:8787
+    command: gunicorn main_project.wsgi:application --bind 0.0.0.0:8787
     networks:
       - custom_network
 
