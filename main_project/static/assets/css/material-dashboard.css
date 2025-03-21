@@ -24768,6 +24768,7 @@ hr.horizontal.gray-light {
   width: 18px;
 }
 
+
 .navbar .sidenav-toggler-inner .sidenav-toggler-line {
   transition: all 0.15s ease;
   background: #737373;
@@ -24833,6 +24834,12 @@ hr.horizontal.gray-light {
   transform: rotate(-45deg);
   transform-origin: 10% 90%;
   margin-top: 3px;
+}
+
+@media (max-width: 500px) {
+  #sidenav-main {
+    display: none;
+  }
 }
 
 @media (max-width: 991.98px) {
