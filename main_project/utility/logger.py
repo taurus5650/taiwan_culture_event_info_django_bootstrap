@@ -17,7 +17,6 @@ class Logger:
         self._logger = logging.getLogger('')
         self._setup_logger()
 
-
     def _create_context_filter(self):
         class ContextFilter(logging.Filter):
             def __init__(self, uuid_var):
@@ -68,22 +67,30 @@ class Logger:
         return handlers
 
     def _setup_logger(self) -> None:
-        # Ensure the request_id is always set
         if self.uuid_var.get() is None:
             self.set_request_id()
-
-        # If already setting handlers properly then continue
-        if self._logger.handlers:
-            return
 
         context_filter = self._create_context_filter()
         handlers = self._create_handlers()
 
-        for handler in handlers:
-            self._logger.addHandler(handler)
+        root_logger = logging.getLogger()
+        if not root_logger.handlers:
+            for handler in handlers:
+                root_logger.addHandler(handler)
+            root_logger.setLevel(logging.INFO)
 
-        self._logger.setLevel(logging.INFO)
-        self._logger.addFilter(context_filter)
+        root_logger.addFilter(context_filter)
+        logging.setLogRecordFactory(self._record_factory_with_request_id())
+
+    def _record_factory_with_request_id(self):
+        factory = logging.getLogRecordFactory()
+
+        def record_factory(*args, **kwargs):
+            record = factory(*args, **kwargs)
+            record.request_id = self.uuid_var.get() or "-"
+            return record
+
+        return record_factory
 
     def set_request_id(self, request_id: Optional[str] = None) -> None:
         """ Set req id for request. """

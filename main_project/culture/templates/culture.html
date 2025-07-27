@@ -8,7 +8,7 @@
 
     <div class="col-xl-12 col-sm-12 mb-xl-0 mb-12">
         <!-- Section Form Action Url -->
-        <div class="p-5 pb-2">
+        <div class="p-2 pb-2">
             <!-- Request Form Action Url -->
             <form method="POST" action="{% url 'culture' %}"> <!-- Calling index API -->
                 {% csrf_token %}
@@ -91,9 +91,9 @@
                 <!--Section 2 -->
 
                 <!-- Section Submit -->
-                <div class="row pt-2">
-                    <div class="col-10">
-                        <button class="text-center btn btn-light btn-lg text-bolder" type="submit" id="submit_btn">
+                <div class="row pt-2 mb-3">
+                    <div class="col-12">
+                        <button class="btn btn-light btn-lg text-bolder" type="submit" id="submit_btn">
                             Submit
                         </button>
                     </div>
@@ -110,68 +110,81 @@
 
 <!-- --- API Response --- -->
 {% if final_resp_data %}
-<div class="container-fluid py-2">
-    <div class="col-xl-12 col-sm-12 mb-xl-0 mb-12">
-        <div class="p-5 pb-1">
-            <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Result</h6>
+<div class="row">
+    <div class="col-12">
+        <div class="container-fluid py-2">
+            <div class="col-xl-12 col-sm-12 mb-xl-0 mb-12">
+                <div class="p-2 pb-1">
+                    <div class="card my-2">
+                        <div class="card-header p-0 position-relative mt-0 mx-3 z-index-2">
+                            <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                                <h6 class="text-white text-capitalize ps-5">Result</h6>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive-sm">
+                                <table class="table align-items-center justify-content-center mb-0 text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Time
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Title
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Location
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                            OnSales
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                            Price
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in final_resp_data %}
+                                    <tr>
+                                        <td>{{ item.Time }}</td>
+                                        <td>
+                                            <a href="{{ item.GoogleSearch }}" target="_blank">{{ item.Title }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ item.GoogleMap }}" target="_blank">{{ item.Location }}</a>
+                                            ({{ item.LocationName }})
+                                        </td>
+                                        <td>{{ item.OnSales }}</td>
+                                        <td>{{ item.Price }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body px-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center justify-content-center mb-0">
-                            <thead>
-                            <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time
-                                </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title
-                                </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Location
-                                </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
-                                    OnSales
-                                </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
-                                    Price
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for item in final_resp_data %}
-                            <tr>
-                                <td>{{ item.Time }}</td>
-                                <td>
-                                    <a href="{{ item.GoogleSearch }}" target="_blank">{{ item.Title }}</a>
-                                </td>
-                                <td>
-                                    <a href="{{ item.GoogleMap }}" target="_blank">{{ item.Location }}</a>
-                                    ({{ item.LocationName }})
-                                </td>
-                                <td>{{ item.OnSales }}</td>
-                                <td>{{ item.Price }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="container-fluid py-2">
+            <div class="col-xl-12 col-sm-12 mb-xl-0 mb-12">
+                <div class="p-5 pb-1">
+                    <p> No result.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% else %}
-<div class="container-fluid py-2">
-    <div class="col-xl-12 col-sm-12 mb-xl-0 mb-12">
-        <div class="p-5 pb-1">
-            <p> No result.</p>
-        </div>
-    </div>
-</div>
+
 {% endif %}
 <!-- --- API Response --- -->
 
+<style>
+    td, td a {
+        word-break: break-word;
+        white-space: normal;
+    }
+</style>
 
 {% endblock %}
