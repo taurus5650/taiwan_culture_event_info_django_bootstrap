@@ -17,7 +17,7 @@ https://taiwan-culture-event-info.fly.dev/tech_stack/ <br>
 |              |         |
 |----------------------|------------------|
 | Backend             | Python Django    |
-| Frontend            | Bootstrap 5      |
+| Frontend            | JinJa2    |
 | Unit Test           | Pytest           |
 | Containerization    | Docker           |
 | CI/CD               | GitHub Actions   |
